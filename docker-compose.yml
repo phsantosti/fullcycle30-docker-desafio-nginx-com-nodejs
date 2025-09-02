@@ -14,6 +14,7 @@ services:
   node:
     build: ./node
     container_name: node
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
     volumes:
       - ./node:/usr/src/app
       - /usr/src/app/node_modules
@@ -22,7 +23,7 @@ services:
       - db
     networks:
       - app-network
-
+    
   db:
     image: mysql:5.7
     container_name: mysql
